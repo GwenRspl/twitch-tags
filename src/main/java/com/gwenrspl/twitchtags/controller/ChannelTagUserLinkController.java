@@ -8,11 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/channel-tag-user-link")
-@CrossOrigin(origins= "*")
 public class ChannelTagUserLinkController {
 
     private ChannelTagUserLinkService service;
@@ -31,26 +29,14 @@ public class ChannelTagUserLinkController {
         return this.service.getOne(id);
     }
 
-    @GetMapping("/by-channel/{id}")
-    public Iterable< ChannelTagUserLink> searchByChannel(@PathVariable Long id) {
-        return this.service.findByChannel(id);
-    }
-
-    @GetMapping("/by-tag/{id}")
-    public Iterable< ChannelTagUserLink> searchByTag(@PathVariable Long id) {
-        return this.service.findByTag(id);
-    }
-
-    @GetMapping("/by-user/{id}")
-    public Iterable< ChannelTagUserLink> searchByUser(@PathVariable Long id) {
-        return this.service.findByUser(id);
-    }
-
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody Map<String, Long> payload) {
         Long channelId = payload.get("channelId");
         Long tagId = payload.get("tagId");
         Long userId = payload.get("userId");
+        if(this.service.isPresent(channelId, tagId, userId)) {
+            return new ResponseEntity<>(new ResponseMessage("Link already exists"), HttpStatus.CONFLICT);
+        }
         this.service.create(channelId, tagId, userId);
         return new ResponseEntity<>(new ResponseMessage("Link created successfully"), HttpStatus.OK);
     }
@@ -59,5 +45,10 @@ public class ChannelTagUserLinkController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         this.service.delete(id);
         return new ResponseEntity<>(new ResponseMessage("Link deleted successfully"), HttpStatus.OK);
+    }
+
+    @GetMapping("/is-present")
+    public Boolean isPresent(@RequestParam("userId") Long userId, @RequestParam("channelId") Long channelId, @RequestParam("tagId") Long tagId) {
+        return this.service.isPresent(channelId, tagId, userId);
     }
 }

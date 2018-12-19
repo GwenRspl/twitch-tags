@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Channel} from "../shared/models/channel.model";
-import {Subject} from "rxjs/internal/Subject";
+import {Channel} from '../shared/models/channel.model';
+import {Subject} from 'rxjs/internal/Subject';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,6 @@ export class SearchService {
 
   constructor() {
   }
-
 
   get searchResult(): Channel[] {
     return this._searchResult;

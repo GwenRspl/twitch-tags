@@ -8,11 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tags")
-@CrossOrigin(origins= "*")
 public class TagController {
 
     private TagService service;
@@ -29,6 +27,11 @@ public class TagController {
     @GetMapping("/{id}")
     public Tag getOne(@PathVariable Long id) {
         return this.service.getOne(id);
+    }
+
+    @GetMapping("/search-by-name/{name}")
+    public Tag getOne(@PathVariable String name) {
+        return this.service.searchByNameStrict(name);
     }
 
     @PostMapping("/create")
