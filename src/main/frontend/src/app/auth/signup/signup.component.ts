@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UsersService} from "../../services/users.service";
-import {SignupInfo} from "../signup-info";
-import {AuthService} from "../auth.service";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
+
+import {UsersService} from '../../services/users.service';
+import {SignupInfo} from '../signup-info';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -57,6 +58,7 @@ export class SignupComponent implements OnInit {
       () => {
         this.isSignedUp = true;
         this.isSignupFailed = false;
+        this.submitted = false;
       },
       error => {
         this.errorMessage = error.error.message;

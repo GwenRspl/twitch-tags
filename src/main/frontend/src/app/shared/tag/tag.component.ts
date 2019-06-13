@@ -1,6 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {ChannelTagUserLink} from "../models/channel-tag-user-link.model";
-import {TagItemService} from "../../services/tag-item.service";
+import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
+import {User} from '../models/user.model';
+import {LinkTagChannelUserInfo} from '../../services/link-tag-channel-user-info';
+import {TokenStorageService} from '../../auth/token-storage.service';
+import {UsersService} from '../../services/users.service';
+import {Channel} from '../models/channel.model';
+import {Tag} from '../models/tag.model';
+import {TagsService} from '../../services/tags.service';
+import {TagItem} from '../models/tag-item.model';
 
 @Component({
   selector: 'app-tag',
@@ -8,14 +14,44 @@ import {TagItemService} from "../../services/tag-item.service";
   styleUrls: ['./tag.component.css']
 })
 export class TagComponent implements OnInit {
-  @Input() links: ChannelTagUserLink[];
+  @Input() arr: TagItem[];
   @Input() limit: number;
-  arr : Array<[string, number]>;
+  @Input() channel: Channel;
+  @Output() updateNeeded = new EventEmitter<boolean>();
 
-  constructor(private service: TagItemService) { }
+  constructor(private tokenStorage: TokenStorageService,
+              private userService: UsersService,
+              private tagService: TagsService) {}
 
   ngOnInit() {
-    this.arr = this.service.prepArray(this.links);
+  }
+
+  onTagClicked(linkName: string) {
+    let username = this.tokenStorage.getUsername();
+    let user: User;
+    this.userService.getUserByUsername(username).subscribe(
+      data => {
+        user = data;
+        let tagToAdd: Tag;
+        this.tagService.getTag(linkName).subscribe(
+          data => {
+            tagToAdd = data;
+            let link = new LinkTagChannelUserInfo(this.channel.id, tagToAdd.id, user.id);
+            this.tagService.addTagToChannel(link).subscribe(
+              () => {
+                this.updateNeeded.emit(true);
+              },
+              error => {
+                console.log(error);
+              }
+            )
+          }
+        );
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }
