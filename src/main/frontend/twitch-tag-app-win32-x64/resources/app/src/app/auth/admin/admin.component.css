@@ -1,0 +1,27 @@
+.tabs ul {
+  border-bottom: 1px solid #9f98a2 !important;
+}
+
+.tabs .is-active a {
+  background-color: #c5c5c5;
+  border-color: #9f98a2;
+  color: #6441a4;
+}
+
+.tabs a:hover {
+  background-color: #ababab;
+  border-bottom: #9f98a2;
+
+}
+
+h1 {
+  margin: 3%;
+}
+
+.hero .hero-body {
+  padding-top: 0;
+  padding-bottom: 5%;
+
+}
+
+

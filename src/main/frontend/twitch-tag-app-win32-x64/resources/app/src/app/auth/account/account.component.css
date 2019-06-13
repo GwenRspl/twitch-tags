@@ -1,0 +1,31 @@
+.account-title {
+  margin-bottom: 20%;
+}
+.account-details {
+  margin-bottom: 15%;
+}
+.detail-item {
+  margin-bottom: 5%;
+}
+
+.subtitle {
+  margin-bottom: 3%;
+}
+
+.buttons {
+  margin-top: 10%;
+}
+
+.btn-width {
+  width: 9.7em;
+}
+
+.mybutton {
+  background-color: #6441a4;
+  color: #ffffff;
+}
+
+.mybutton:hover {
+  background-color: #845ec9;
+  color : #f8f8f8;
+}
