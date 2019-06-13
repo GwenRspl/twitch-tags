@@ -1,9 +1,0 @@
-<div class="container">
-  <div class="columns is-multiline">
-    <div class="column is-one-quarter" *ngFor="let channel of array">
-      <img routerLink="/app/profile/{{channel[0].id}}" src="{{channel[0].avatar}}">
-      <div class="channel-name">{{channel[0].name}}</div>
-      <app-tag [arr]="channel[1]" [channel]="channel[0]" [limit]="2" (updateNeeded)="updateChannelAndTags($event)"></app-tag>
-    </div>
-  </div>
-</div>
