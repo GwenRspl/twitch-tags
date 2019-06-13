@@ -9,7 +9,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build --base-href ./ && tsc --p electron && electron ."
+    "electron": "ng build --base-href ./ && tsc --p electron && electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . twitch-tag-app --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",
+    "package-linux": "electron-packager .  twitch-tag-app --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds --executableName=\"twitch-tag-app\"",
+    "create-debian-installer": "electron-installer-debian --src release-builds/twitch-tag-app-linux-x64/ --arch amd64 --config electron/debian.json"
+
   },
   "private": true,
   "dependencies": {

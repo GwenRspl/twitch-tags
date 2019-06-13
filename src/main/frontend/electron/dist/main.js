@@ -13,7 +13,7 @@ electron_1.app.on('activate', function () {
 function createWindow() {
     win = new electron_1.BrowserWindow({ width: 1920, height: 1080 });
     win.loadURL(url.format({
-        pathname: path.join(__dirname, "/../../../resources/static/index.html"),
+        pathname: path.join(__dirname, "/../../dist/index.html"),
         protocol: 'file:',
         slashes: true,
     }));
